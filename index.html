@@ -72,7 +72,7 @@
     <div id="notification-area" class="notification"></div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbyn6q6NqQpY_0JGei_MOP1IGY5aFi_GFTt3kvaaYQD3bREgdoqDJVBqUt02GLS5aK8k/exec';
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbyn6q6NqQpY_0JGei_MOP1IGY5aFi_GFTt3kvaaYQD3bREgdoqDJVBqUt02GLS5aK8k/exec'; // Gantikan dengan URL GAS terkini anda
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
@@ -121,8 +121,8 @@
 
         function handleNameSelection() {
             const name = namaSelect.value;
-            form.reset(); // Sentiasa reset medan bawahan apabila nama ditukar
-            namaSelect.value = name; // Letak semula nama yang dipilih
+            form.reset();
+            namaSelect.value = name;
 
             if (!name) {
                 jawatanSelect.disabled = false;
@@ -157,16 +157,35 @@
             else { alasanSelect.value = ''; }
         }
 
+        // ===== FUNGSI INI TELAH DIPERBAIKI =====
         async function saveData() {
-            if (googleAppScriptUrl.includes('URL_AKHIR_ANDA')) { showNotification('Ralat: Sila tetapkan URL Apps Script.', 'error'); return; }
-            
+            if (googleAppScriptUrl.includes('URL_AKHIR_ANDA')) {
+                showNotification('Ralat: Sila tetapkan URL Apps Script.', 'error');
+                return;
+            }
+
+            const selectedName = namaSelect.value;
+            const existingRecord = dailyRecords[selectedName];
+
+            // Jika ada rekod sedia ada, ambil jawatan & kategori dari situ. Jika tidak, ambil dari borang.
+            const jawatanValue = existingRecord ? existingRecord.Jawatan : jawatanSelect.value;
+            const kategoriValue = existingRecord ? existingRecord.Kategori : kategoriSelect.value;
+
             const recordData = {
-                tarikh: attendanceDateInput.value, nama: namaSelect.value, jawatan: jawatanSelect.value,
-                kategori: kategoriSelect.value, status: statusSelect.value, masa_datang: masaDatangInput.value,
-                masa_balik: masaBalikInput.value, alasan: alasanSelect.value,
+                tarikh: attendanceDateInput.value,
+                nama: selectedName,
+                jawatan: jawatanValue,
+                kategori: kategoriValue,
+                status: statusSelect.value,
+                masa_datang: masaDatangInput.value,
+                masa_balik: masaBalikInput.value,
+                alasan: alasanSelect.value,
             };
+
+            // Validasi kini lebih pintar
             if (!recordData.tarikh || !recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) {
-                showNotification('Sila lengkapkan semua medan yang diperlukan.', 'error'); return;
+                showNotification('Sila lengkapkan semua medan yang diperlukan.', 'error');
+                return;
             }
 
             showNotification('Menghantar data...', 'warning');
@@ -178,7 +197,7 @@
                 const data = await response.json();
                 if (data.result === 'success') {
                     showNotification(data.message, 'success');
-                    await fetchDailyData(); // Muat turun semula data selepas berjaya
+                    await fetchDailyData(); 
                 } else { throw new Error(data.message); }
             } catch (error) {
                 showNotification(`Gagal menyimpan: ${error.message}`, 'error');
@@ -225,12 +244,18 @@
             const todayISO = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
             attendanceDateInput.value = todayISO;
             updateDateDisplay(todayISO);
-            populateDropdown(namaSelect, namaList, 'Pilih Nama');
-            populateDropdown(jawatanSelect, jawatanList, 'Pilih Jawatan');
-            populateDropdown(kategoriSelect, kategoriList, 'Pilih Kategori');
+            
+            const functionsToPopulate = [
+                () => populateDropdown(namaSelect, namaList, 'Pilih Nama'),
+                () => populateDropdown(jawatanSelect, jawatanList, 'Pilih Jawatan'),
+                () => populateDropdown(kategoriSelect, kategoriList, 'Pilih Kategori')
+            ];
+            functionsToPopulate.forEach(fn => fn());
+
             resetForm(true);
         }
         
+        // --- EVENT LISTENERS ---
         namaSelect.addEventListener('change', handleNameSelection);
         statusSelect.addEventListener('change', handleStatusChange);
         attendanceDateInput.addEventListener('change', () => {

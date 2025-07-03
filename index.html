@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kehadiran Staf SKKM</title>
+    <!-- CSS kekal sama seperti sebelum ini -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        :root { /* ... styles ... */ }
+        /* ... Salin semua style dari jawapan sebelumnya ... */
         :root {
             --skkm-blue: #0056b3; --skkm-red: #d9251d; --skkm-yellow: #ffc107; --skkm-green: #28a745;
             --text-color: #333; --header-bg: rgba(255, 255, 255, 0.9); --form-bg: rgba(255, 255, 255, 0.85);
@@ -42,6 +45,7 @@
     </style>
 </head>
 <body>
+    <!-- Struktur HTML kekal sama -->
     <div class="container">
         <header class="header">
             <img src="https://i.postimg.cc/qqQ1s1V9/LOGO-SKKM-2023-LATEST.png" alt="Logo SK Kuala Muput">
@@ -71,12 +75,10 @@
             <a href="https://docs.google.com/spreadsheets/d/1TH5fOfbMY2hApwrQazPcv2xoMctoXRT27MKGZZYHi2E/edit?usp=sharing" target="_blank" class="action-button report-button">Jana Laporan Penuh</a>
         </div>
     </div>
-
     <div id="notification-area" class="notification"></div>
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbxQ0eXY_D_jTQUpq4CVZEamlO_eAmTs4i9Gxlkch55L6ExvMgRT7Qrrk2hzOK0ssznBBw/exec'; // <-- PENTING: GANTIKAN DENGAN URL SEBENAR ANDA
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbxNquZMyEBo7d9wz8ZxulTaRv2ja9KcAM6WSWTXMbZGdt-MuxwcD1bnReCcspicnvD-sg/exec'; // <-- PENTING: GANTIKAN DENGAN URL SEBENAR ANDA
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
@@ -102,13 +104,20 @@
         refreshButton.textContent = 'Muat Semula Data Hari Ini';
         resetButton.parentNode.insertBefore(refreshButton, resetButton);
 
+        // Fungsi ini selamat untuk semua pelayar
         function updateDateDisplay(dateString) {
-            if (!dateString) { dateDisplayElement.textContent = 'Sila pilih tarikh'; return; }
+            if (!dateString) {
+                dateDisplayElement.textContent = 'Sila pilih tarikh';
+                return;
+            }
             try {
-                const dateObj = new Date(dateString.replace(/-/g, "/"));
+                const [year, month, day] = dateString.split('-');
+                const dateObj = new Date(year, month - 1, day);
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 dateDisplayElement.textContent = `Rekod untuk: ${dateObj.toLocaleDateString('ms-MY', options)}`;
-            } catch (e) { dateDisplayElement.textContent = "Tarikh tidak sah"; }
+            } catch (e) {
+                dateDisplayElement.textContent = "Tarikh tidak sah";
+            }
         }
 
         function populateDropdown(selectElement, list, placeholder) {

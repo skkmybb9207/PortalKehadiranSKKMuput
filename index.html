@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kehadiran Staf SKKM</title>
-    <!-- CSS kekal sama seperti sebelum ini -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-        :root { /* ... styles ... */ }
-        /* ... Salin semua style dari jawapan sebelumnya ... */
         :root {
             --skkm-blue: #0056b3; --skkm-red: #d9251d; --skkm-yellow: #ffc107; --skkm-green: #28a745;
             --text-color: #333; --header-bg: rgba(255, 255, 255, 0.9); --form-bg: rgba(255, 255, 255, 0.85);
@@ -45,14 +42,12 @@
     </style>
 </head>
 <body>
-    <!-- Struktur HTML kekal sama -->
     <div class="container">
         <header class="header">
             <img src="https://i.postimg.cc/qqQ1s1V9/LOGO-SKKM-2023-LATEST.png" alt="Logo SK Kuala Muput">
             <h1>Portal Kehadiran Staf</h1>
             <p id="date-display"></p>
         </header>
-
         <section class="entry-form-section">
             <h2>Borang Kemaskini Kehadiran</h2>
             <form id="attendance-form">
@@ -68,7 +63,6 @@
                 </div>
             </form>
         </section>
-        
         <div class="action-buttons">
             <button id="save-button" class="action-button save-button">Simpan</button>
             <button id="reset-button" class="action-button reset-button">Reset Borang</button>
@@ -78,7 +72,7 @@
     <div id="notification-area" class="notification"></div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbxNquZMyEBo7d9wz8ZxulTaRv2ja9KcAM6WSWTXMbZGdt-MuxwcD1bnReCcspicnvD-sg/exec'; // <-- PENTING: GANTIKAN DENGAN URL SEBENAR ANDA
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbx3px1Nq3aOOThVe7mzKNjY7JWtjzdsk2BKmVq810C8jrQ-QWIJESvG1I3C-U25wMkw-g/exec'; // <-- MASUKKAN URL BARU DI SINI
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
@@ -104,19 +98,17 @@
         refreshButton.textContent = 'Muat Semula Data Hari Ini';
         resetButton.parentNode.insertBefore(refreshButton, resetButton);
 
-        // Fungsi ini selamat untuk semua pelayar
         function updateDateDisplay(dateString) {
-            if (!dateString) {
-                dateDisplayElement.textContent = 'Sila pilih tarikh';
-                return;
-            }
+            if (!dateString) { dateDisplayElement.textContent = 'Sila pilih tarikh'; return; }
             try {
                 const [year, month, day] = dateString.split('-');
+                if (!year || !month || !day) throw new Error("Format tarikh tidak lengkap");
                 const dateObj = new Date(year, month - 1, day);
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 dateDisplayElement.textContent = `Rekod untuk: ${dateObj.toLocaleDateString('ms-MY', options)}`;
             } catch (e) {
                 dateDisplayElement.textContent = "Tarikh tidak sah";
+                console.error("Ralat memformat tarikh:", e);
             }
         }
 
@@ -141,66 +133,97 @@
         function handleNameSelection() {
             const selectedName = namaSelect.value;
             if (!selectedName) {
+                form.reset();
                 jawatanSelect.disabled = false;
                 kategoriSelect.disabled = false;
                 statusSelect.disabled = true;
-                handleStatusChange(); return;
+                handleStatusChange();
+                return;
             }
             if (dailyRecords[selectedName]) {
                 const record = dailyRecords[selectedName];
-                jawatanSelect.value = record.Jawatan;
-                kategoriSelect.value = record.Kategori;
-                statusSelect.value = record.Status;
-                masaDatangInput.value = record.Masa_Datang;
-                masaBalikInput.value = record.Masa_Balik;
-                alasanSelect.value = record.Alasan;
+                jawatanSelect.value = record.Jawatan || '';
+                kategoriSelect.value = record.Kategori || '';
+                statusSelect.value = record.Status || '';
+                masaDatangInput.value = record.Masa_Datang || '';
+                masaBalikInput.value = record.Masa_Balik || '';
+                alasanSelect.value = record.Alasan || '';
                 jawatanSelect.disabled = true;
                 kategoriSelect.disabled = true;
             } else {
-                jawatanSelect.value = ''; kategoriSelect.value = '';
-                jawatanSelect.disabled = false; kategoriSelect.disabled = false;
+                jawatanSelect.value = '';
+                kategoriSelect.value = '';
+                jawatanSelect.disabled = false;
+                kategoriSelect.disabled = false;
             }
             statusSelect.disabled = false;
             handleStatusChange();
         }
         
         function handleStatusChange() {
-            const status = statusSelect.value; const isHadir = status === 'Telah Hadir';
-            masaDatangInput.disabled = !isHadir; masaBalikInput.disabled = !isHadir;
+            const status = statusSelect.value;
+            const isHadir = status === 'Telah Hadir';
+            masaDatangInput.disabled = !isHadir;
+            masaBalikInput.disabled = !isHadir;
             alasanSelect.disabled = isHadir;
-            if (!isHadir) { masaDatangInput.value = ''; masaBalikInput.value = ''; } 
-            else { alasanSelect.value = ''; }
+            if (!isHadir) {
+                masaDatangInput.value = '';
+                masaBalikInput.value = '';
+            } else {
+                alasanSelect.value = '';
+            }
         }
 
         function saveData() {
-            if (googleAppScriptUrl.includes('URL_WEB_APP_BAHARU_ANDA_DI_SINI')) { showNotification('Ralat: URL Google Apps Script belum ditetapkan.', 'error'); return; }
+            if (googleAppScriptUrl.includes('URL_WEB_APP_BAHARU_ANDA_DI_SINI')) {
+                showNotification('Ralat: URL Google Apps Script belum ditetapkan.', 'error');
+                return;
+            }
             const recordData = {
                 tarikh: attendanceDateInput.value, nama: namaSelect.value, jawatan: jawatanSelect.value,
                 kategori: kategoriSelect.value, status: statusSelect.value, masa_datang: masaDatangInput.value,
                 masa_balik: masaBalikInput.value, alasan: alasanSelect.value,
             };
-            if (!recordData.tarikh) { showNotification('Ralat: Tarikh tidak sah. Sila pilih semula.', 'error'); return; }
-            if (!recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) { showNotification('Sila lengkapkan Nama, Jawatan, Kategori, dan Status.', 'error'); return; }
+            if (!recordData.tarikh) {
+                showNotification('Ralat: Tarikh tidak sah. Sila pilih semula.', 'error');
+                return;
+            }
+            if (!recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) {
+                showNotification('Sila lengkapkan Nama, Jawatan, Kategori, dan Status.', 'error');
+                return;
+            }
 
             showNotification('Menghantar data...', 'warning');
             saveButton.disabled = true;
             const formData = new FormData();
-            for (const key in recordData) { formData.append(key, recordData[key]); }
+            for (const key in recordData) {
+                formData.append(key, recordData[key]);
+            }
             fetch(googleAppScriptUrl, { method: 'POST', body: formData })
                 .then(res => res.json())
                 .then(data => {
                     if (data.result === 'success') {
                         showNotification(data.message, 'success');
-                        fetchDailyData(); 
-                    } else { throw new Error(data.message); }
+                        fetchDailyData(); // Muat turun semula data selepas berjaya simpan/kemas kini
+                    } else {
+                        throw new Error(data.message || 'Ralat tidak diketahui dari server.');
+                    }
                 })
-                .catch(error => { console.error('Error:', error); showNotification(`Gagal menyimpan: ${error.message}`, 'error'); })
-                .finally(() => { saveButton.disabled = false; });
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification(`Gagal menyimpan: ${error.message}`, 'error');
+                })
+                .finally(() => {
+                    saveButton.disabled = false;
+                });
         }
         
         function fetchDailyData() {
             const selectedDate = attendanceDateInput.value;
-            if (!selectedDate) { showNotification('Ralat: Tiada tarikh dipilih untuk dimuat turun.', 'error'); return; }
+            if (!selectedDate) {
+                showNotification('Ralat: Tiada tarikh dipilih untuk dimuat turun.', 'error');
+                return;
+            }
             
             const urlWithParams = `${googleAppScriptUrl}?date=${selectedDate}`;
             showNotification('Memuat turun data...', 'warning');
@@ -210,15 +233,24 @@
                 .then(response => {
                     if (response.result === 'success') {
                         dailyRecords = {};
-                        if (response.data) {
-                            response.data.forEach(record => { dailyRecords[record.Nama] = record; });
+                        if (response.data && Array.isArray(response.data)) {
+                            response.data.forEach(record => {
+                                if(record.Nama) dailyRecords[record.Nama] = record;
+                            });
                         }
-                        handleNameSelection();
+                        resetFormFields(false); // Reset borang sambil kekalkan nama jika ada
                         showNotification(`Data untuk ${selectedDate} berjaya dimuat turun.`, 'success');
-                    } else { throw new Error(response.message); }
+                    } else {
+                        throw new Error(response.message || 'Ralat tidak diketahui dari server.');
+                    }
                 })
-                .catch(error => { console.error('Error fetching data:', error); showNotification(`Gagal muat turun: ${error.message}`, 'error'); })
-                .finally(() => { refreshButton.disabled = false; });
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    showNotification(`Gagal muat turun: ${error.message}`, 'error');
+                })
+                .finally(() => {
+                    refreshButton.disabled = false;
+                });
         }
         
         function showNotification(message, type) {
@@ -226,7 +258,7 @@
             notificationArea.className = 'notification';
             notificationArea.classList.add(type, 'show');
             notificationArea.textContent = message;
-            setTimeout(() => { notificationArea.classList.remove('show'); }, 4000);
+            setTimeout(() => { notificationArea.classList.remove('show'); }, 5000); // Masa notifikasi lebih lama
         }
         
         function initializePage() {
@@ -241,12 +273,13 @@
             resetFormFields(true);
         }
         
+        // --- EVENT LISTENERS ---
         namaSelect.addEventListener('change', handleNameSelection);
         statusSelect.addEventListener('change', handleStatusChange);
         attendanceDateInput.addEventListener('change', () => {
              const newDate = attendanceDateInput.value;
              updateDateDisplay(newDate);
-             showNotification(`Borang kini untuk tarikh: ${newDate}. Data sesi dikosongkan.`, 'warning');
+             showNotification(`Borang kini untuk tarikh: ${newDate}. Sila muat semula data jika perlu.`, 'warning');
              dailyRecords = {};
              resetFormFields(true);
         });

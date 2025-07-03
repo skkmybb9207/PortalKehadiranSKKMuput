@@ -11,173 +11,34 @@
             --text-color: #333; --header-bg: rgba(255, 255, 255, 0.9); --form-bg: rgba(255, 255, 255, 0.85);
             --border-color: #dee2e6; --shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #e6f0ff 0%, #fff0f0 25%, #fffbe6 50%, #e6f6ec 75%, #e6f0ff 100%);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 25px;
-            background-color: var(--header-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .header img {
-            max-width: 120px;
-            margin-bottom: 15px;
-        }
-        .header h1 {
-            color: var(--skkm-blue);
-            font-weight: 700;
-            margin: 0;
-            font-size: 1.8em;
-        }
-        .header p#date-display {
-            margin-top: 15px;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #444;
-            background-color: rgba(255, 224, 130, 0.6);
-            padding: 8px 15px;
-            border-radius: 8px;
-            display: inline-block;
-            border: 1px solid rgba(224, 194, 100, 0.5);
-        }
-        .entry-form-section {
-            background-color: var(--form-bg);
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-        }
-        .entry-form-section h2 {
-            margin-top: 0;
-            border-bottom: 2px solid var(--skkm-blue);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        .form-group select, .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            -webkit-appearance: none;
-            appearance: none;
-            background-color: white;
-            box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .form-group select {
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-13z%22/%3E%3C/svg%3E');
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: .65em auto;
-            padding-right: 40px;
-        }
-        .form-group select:focus, .form-group input:focus {
-            outline: none;
-            border-color: var(--skkm-blue);
-            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25);
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .action-button {
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            -webkit-appearance: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            touch-action: manipulation;
-        }
-        .action-button:hover, .action-button:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            outline: none;
-        }
+        body { font-family: 'Poppins', sans-serif; color: var(--text-color); margin: 0; padding: 20px; line-height: 1.6; background: linear-gradient(135deg, #e6f0ff 0%, #fff0f0 25%, #fffbe6 50%, #e6f6ec 75%, #e6f0ff 100%); background-size: 400% 400%; animation: gradientAnimation 15s ease infinite; -webkit-font-smoothing: antialiased; }
+        @keyframes gradientAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .container { max-width: 900px; margin: 0 auto; padding: 25px; background-color: var(--header-bg); border-radius: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .header img { max-width: 120px; margin-bottom: 15px; }
+        .header h1 { color: var(--skkm-blue); font-weight: 700; margin: 0; font-size: 1.8em; }
+        .header p#date-display { margin-top: 15px; font-size: 1.1em; font-weight: 600; color: #444; background-color: rgba(255, 224, 130, 0.6); padding: 8px 15px; border-radius: 8px; display: inline-block; border: 1px solid rgba(224, 194, 100, 0.5); }
+        .entry-form-section { background-color: var(--form-bg); padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--border-color); }
+        .entry-form-section h2 { margin-top: 0; border-bottom: 2px solid var(--skkm-blue); padding-bottom: 10px; margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 5px; font-weight: 600; }
+        .form-group select, .form-group input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 16px; -webkit-appearance: none; appearance: none; background-color: white; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group select { background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-13z%22/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: .65em auto; padding-right: 40px; }
+        .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--skkm-blue); box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25); }
+        .action-buttons { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 30px; }
+        .action-button { color: white; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; -webkit-appearance: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-shadow: 1px 1px 2px rgba(0,0,0,0.2); touch-action: manipulation; }
+        .action-button:hover, .action-button:focus { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); outline: none; }
         .save-button { background-color: var(--skkm-blue); }
         #refresh-button { background-color: var(--skkm-green); }
         .reset-button { background-color: var(--skkm-yellow); color: #333; text-shadow: none; }
         .report-button { background-color: var(--skkm-red); }
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-50px);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            pointer-events: none;
-        }
-        .notification.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; padding: 15px 20px; border-radius: 8px; color: white; font-weight: 600; z-index: 1000; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; text-align: center;}
+        .notification.show { opacity: 1; transform: translate(-50%, 20px); pointer-events: auto; }
         .notification.success { background-color: rgba(40, 167, 69, 0.9); }
         .notification.error { background-color: rgba(220, 53, 69, 0.9); }
         .notification.warning { background-color: rgba(255, 193, 7, 0.9); color: #333; }
-        @media (max-width: 992px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .container { padding: 15px; backdrop-filter: none; -webkit-backdrop-filter: none; }
-            .header h1 { font-size: 1.5em; }
-            .action-buttons { flex-direction: column; align-items: stretch; }
-        }
+        @media (max-width: 768px) { .container { padding: 15px; backdrop-filter: none; -webkit-backdrop-filter: none; } .header h1 { font-size: 1.5em; } .action-buttons { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
@@ -199,7 +60,7 @@
                     <div class="form-group"><label for="select-status">Status Kehadiran</label><select id="select-status" disabled><option value="">Pilih...</option><option value="Telah Hadir">Telah Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
                     <div class="form-group"><label for="input-masa-datang">Masa Datang</label><input type="time" id="input-masa-datang" disabled></div>
                     <div class="form-group"><label for="input-masa-balik">Masa Balik</label><input type="time" id="input-masa-balik" disabled></div>
-                    <div class="form-group"><label for="select-alasan">Alasan Tidak Hadir</label><select id="select-alasan" disabled><option value="">-</option><option value="URUSAN RASMI DI LUAR SEKOLAH">URUSAN RASMI DI LUAR SEKOLAH</option><option value="URUSAN PERIBADI">URUSAN PERIBADI</option><option value="SAKIT">SAKIT</option></select></div>
+                    <div class="form-group"><label for="select-alasan">Alasan Tidak Hadir</label><select id="select-alasan" disabled><option value="">-</option><option value="URUSAN RASMI DI LUAR SEKOLAH">URUSAN RASMI</option><option value="URUSAN PERIBADI">URUSAN PERIBADI</option><option value="SAKIT">SAKIT</option></select></div>
                 </div>
             </form>
         </section>
@@ -215,7 +76,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbz7rzJdAAcfzpqe8c_q3tCVALRGc8PP_Q9-6rEirchKqCzIA80LKgnmJyVDAkI07clBQQ/exec'; // <-- PENTING: GANTIKAN DENGAN URL SEBENAR ANDA
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbxZ_LFo_RlYWzBZcAxE1VPrD1GfFfmsuRUAGifL12G1D-l9hWgZOm5wC63JpnTt4L-qzA/exec';
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
@@ -247,19 +108,12 @@
                 const dateObj = new Date(dateString.replace(/-/g, "/"));
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 dateDisplayElement.textContent = `Rekod untuk: ${dateObj.toLocaleDateString('ms-MY', options)}`;
-            } catch (e) {
-                dateDisplayElement.textContent = "Tarikh tidak sah";
-            }
+            } catch (e) { dateDisplayElement.textContent = "Tarikh tidak sah"; }
         }
 
         function populateDropdown(selectElement, list, placeholder) {
             selectElement.innerHTML = `<option value="">-- ${placeholder} --</option>`;
-            list.sort().forEach(item => {
-                const option = document.createElement('option');
-                option.value = item;
-                option.textContent = item;
-                selectElement.appendChild(option);
-            });
+            list.sort().forEach(item => { selectElement.innerHTML += `<option value="${item}">${item}</option>`; });
         }
 
         function populateAllDropdowns() {
@@ -269,28 +123,20 @@
         }
 
         function resetFormFields(isFullReset = false) {
-            if (isFullReset) {
-                form.reset();
-                namaSelect.value = '';
-            } else {
-                const selectedName = namaSelect.value;
-                form.reset();
-                namaSelect.value = selectedName;
-            }
+            const selectedName = isFullReset ? '' : namaSelect.value;
+            form.reset();
+            namaSelect.value = selectedName;
             handleNameSelection();
         }
 
         function handleNameSelection() {
             const selectedName = namaSelect.value;
-
             if (!selectedName) {
                 jawatanSelect.disabled = false;
                 kategoriSelect.disabled = false;
                 statusSelect.disabled = true;
-                handleStatusChange();
-                return;
+                handleStatusChange(); return;
             }
-
             if (dailyRecords[selectedName]) {
                 const record = dailyRecords[selectedName];
                 jawatanSelect.value = record.Jawatan;
@@ -302,76 +148,44 @@
                 jawatanSelect.disabled = true;
                 kategoriSelect.disabled = true;
             } else {
-                jawatanSelect.value = '';
-                kategoriSelect.value = '';
-                jawatanSelect.disabled = false;
-                kategoriSelect.disabled = false;
+                jawatanSelect.value = ''; kategoriSelect.value = '';
+                jawatanSelect.disabled = false; kategoriSelect.disabled = false;
             }
             statusSelect.disabled = false;
             handleStatusChange();
         }
         
         function handleStatusChange() {
-            const status = statusSelect.value;
-            const isHadir = status === 'Telah Hadir';
-            masaDatangInput.disabled = !isHadir;
-            masaBalikInput.disabled = !isHadir;
+            const status = statusSelect.value; const isHadir = status === 'Telah Hadir';
+            masaDatangInput.disabled = !isHadir; masaBalikInput.disabled = !isHadir;
             alasanSelect.disabled = isHadir;
-            if (!isHadir) {
-                masaDatangInput.value = '';
-                masaBalikInput.value = '';
-            } else {
-                alasanSelect.value = '';
-            }
+            if (!isHadir) { masaDatangInput.value = ''; masaBalikInput.value = ''; } 
+            else { alasanSelect.value = ''; }
         }
 
         function saveData() {
-            if (googleAppScriptUrl.includes('GANTIKAN_DENGAN')) {
-                showNotification('Ralat: URL Google Apps Script belum ditetapkan.', 'error');
-                return;
-            }
+            if (googleAppScriptUrl.includes('GANTIKAN_DENGAN')) { showNotification('Ralat: URL Google Apps Script belum ditetapkan.', 'error'); return; }
             const recordData = {
-                tarikh: attendanceDateInput.value,
-                nama: namaSelect.value,
-                jawatan: jawatanSelect.value,
-                kategori: kategoriSelect.value,
-                status: statusSelect.value,
-                masa_datang: masaDatangInput.value,
-                masa_balik: masaBalikInput.value,
-                alasan: alasanSelect.value,
+                tarikh: attendanceDateInput.value, nama: namaSelect.value, jawatan: jawatanSelect.value,
+                kategori: kategoriSelect.value, status: statusSelect.value, masa_datang: masaDatangInput.value,
+                masa_balik: masaBalikInput.value, alasan: alasanSelect.value,
             };
-
-            if (!recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) {
-                showNotification('Sila lengkapkan Nama, Jawatan, Kategori, dan Status.', 'error');
-                return;
-            }
+            if (!recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) { showNotification('Sila lengkapkan Nama, Jawatan, Kategori, dan Status.', 'error'); return; }
 
             showNotification('Menghantar data...', 'warning');
             saveButton.disabled = true;
-
             const formData = new FormData();
             for (const key in recordData) { formData.append(key, recordData[key]); }
-
             fetch(googleAppScriptUrl, { method: 'POST', body: formData })
-                .then(res => {
-                    if (!res.ok) throw new Error(`Ralat rangkaian: ${res.statusText}`);
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(data => {
                     if (data.result === 'success') {
                         showNotification(data.message, 'success');
-                        fetchDailyData(); // Muat semula data selepas berjaya simpan
-                    } else {
-                        throw new Error(data.message);
-                    }
+                        fetchDailyData(); 
+                    } else { throw new Error(data.message); }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showNotification(`Gagal menyimpan: ${error.message}`, 'error');
-                })
-                .finally(() => {
-                    saveButton.disabled = false;
-                });
+                .catch(error => { console.error('Error:', error); showNotification(`Gagal menyimpan: ${error.message}`, 'error'); })
+                .finally(() => { saveButton.disabled = false; });
         }
         
         function fetchDailyData() {
@@ -379,31 +193,18 @@
             const urlWithParams = `${googleAppScriptUrl}?date=${selectedDate}`;
             showNotification('Memuat turun data...', 'warning');
             refreshButton.disabled = true;
-
             fetch(urlWithParams)
-                .then(res => {
-                    if (!res.ok) throw new Error(`Ralat rangkaian: ${res.statusText}`);
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(response => {
                     if (response.result === 'success') {
                         dailyRecords = {};
-                        response.data.forEach(record => {
-                            dailyRecords[record.Nama] = record;
-                        });
+                        response.data.forEach(record => { dailyRecords[record.Nama] = record; });
                         handleNameSelection();
                         showNotification(`Data untuk ${selectedDate} berjaya dimuat turun.`, 'success');
-                    } else {
-                        throw new Error(response.message);
-                    }
+                    } else { throw new Error(response.message); }
                 })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    showNotification(`Gagal muat turun: ${error.message}`, 'error');
-                })
-                .finally(() => {
-                    refreshButton.disabled = false;
-                });
+                .catch(error => { console.error('Error fetching data:', error); showNotification(`Gagal muat turun: ${error.message}`, 'error'); })
+                .finally(() => { refreshButton.disabled = false; });
         }
         
         function showNotification(message, type) {
@@ -420,18 +221,14 @@
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
             const todayISO = `${year}-${month}-${day}`;
-            
             attendanceDateInput.value = todayISO;
             updateDateDisplay(todayISO);
-            
             populateAllDropdowns();
             resetFormFields(true);
         }
         
-        // --- EVENT LISTENERS ---
         namaSelect.addEventListener('change', handleNameSelection);
         statusSelect.addEventListener('change', handleStatusChange);
-        
         attendanceDateInput.addEventListener('change', () => {
              const newDate = attendanceDateInput.value;
              updateDateDisplay(newDate);
@@ -439,7 +236,6 @@
              dailyRecords = {};
              resetFormFields(true);
         });
-
         saveButton.addEventListener('click', (event) => { event.preventDefault(); saveData(); });
         resetButton.addEventListener('click', (event) => { event.preventDefault(); resetFormFields(true); showNotification('Borang telah direset sepenuhnya.', 'warning'); });
         refreshButton.addEventListener('click', (event) => { event.preventDefault(); fetchDailyData(); });

@@ -11,7 +11,11 @@
             --text-color: #333; --header-bg: rgba(255, 255, 255, 0.9); --form-bg: rgba(255, 255, 255, 0.85);
             --border-color: #dee2e6; --shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
-        body { font-family: 'Poppins', sans-serif; color: var(--text-color); margin: 0; padding: 20px; line-height: 1.6; background: linear-gradient(135deg, #e6f0ff 0%, #fff0f0 25%, #fffbe6 50%, #e6f6ec 75%, #e6f0ff 100%); background-size: 400% 400%; animation: gradientAnimation 15s ease infinite; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: 'Poppins', sans-serif; color: var(--text-color); margin: 0; padding: 20px;
+            line-height: 1.6; background: linear-gradient(135deg, #e6f0ff 0%, #fff0f0 25%, #fffbe6 50%, #e6f6ec 75%, #e6f0ff 100%);
+            background-size: 400% 400%; animation: gradientAnimation 15s ease infinite; -webkit-font-smoothing: antialiased;
+        }
         @keyframes gradientAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .container { max-width: 900px; margin: 0 auto; padding: 25px; background-color: var(--header-bg); border-radius: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
         .header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -48,21 +52,23 @@
             <h1>Portal Kehadiran Staf</h1>
             <p id="date-display"></p>
         </header>
+
         <section class="entry-form-section">
             <h2>Borang Kemaskini Kehadiran</h2>
             <form id="attendance-form">
                 <div class="form-grid">
-                    <div class="form-group"><label for="attendance-date">Tarikh</label><input type="date" id="attendance-date"></div>
-                    <div class="form-group"><label for="select-nama">Nama Staf</label><select id="select-nama"></select></div>
-                    <div class="form-group"><label for="select-jawatan">Jawatan</label><select id="select-jawatan"></select></div>
-                    <div class="form-group"><label for="select-kategori">Kategori</label><select id="select-kategori"></select></div>
-                    <div class="form-group"><label for="select-status">Status Kehadiran</label><select id="select-status" disabled><option value="">Pilih...</option><option value="Telah Hadir">Telah Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
-                    <div class="form-group"><label for="input-masa-datang">Masa Datang</label><input type="time" id="input-masa-datang" disabled></div>
-                    <div class="form-group"><label for="input-masa-balik">Masa Balik</label><input type="time" id="input-masa-balik" disabled></div>
-                    <div class="form-group"><label for="select-alasan">Alasan Tidak Hadir</label><select id="select-alasan" disabled><option value="">-</option><option value="URUSAN RASMI DI LUAR SEKOLAH">URUSAN RASMI</option><option value="URUSAN PERIBADI">URUSAN PERIBADI</option><option value="SAKIT">SAKIT</option></select></div>
+                    <div class="form-group"><label for="tarikh">Tarikh</label><input type="date" id="tarikh"></div>
+                    <div class="form-group"><label for="nama">Nama Staf</label><select id="nama"></select></div>
+                    <div class="form-group"><label for="jawatan">Jawatan</label><select id="jawatan"></select></div>
+                    <div class="form-group"><label for="kategori">Kategori</label><select id="kategori"></select></div>
+                    <div class="form-group"><label for="status">Status Kehadiran</label><select id="status" disabled><option value="">Pilih...</option><option value="Telah Hadir">Telah Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
+                    <div class="form-group"><label for="masa_datang">Masa Datang</label><input type="time" id="masa_datang" disabled></div>
+                    <div class="form-group"><label for="masa_balik">Masa Balik</label><input type="time" id="masa_balik" disabled></div>
+                    <div class="form-group"><label for="alasan">Alasan Tidak Hadir</label><select id="alasan" disabled><option value="">-</option><option value="URUSAN RASMI DI LUAR SEKOLAH">URUSAN RASMI</option><option value="URUSAN PERIBADI">URUSAN PERIBADI</option><option value="SAKIT">SAKIT</option></select></div>
                 </div>
             </form>
         </section>
+        
         <div class="action-buttons">
             <button id="save-button" class="action-button save-button">Simpan</button>
             <button id="reset-button" class="action-button reset-button">Reset Borang</button>
@@ -70,9 +76,10 @@
         </div>
     </div>
     <div id="notification-area" class="notification"></div>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbyn6q6NqQpY_0JGei_MOP1IGY5aFi_GFTt3kvaaYQD3bREgdoqDJVBqUt02GLS5aK8k/exec'; // Gantikan dengan URL GAS terkini anda
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbwRkBqb4REMkpndQHZljEmbWUfDXjs1IFciZuH9szEdmtMLMmtIjYZ6zhAttItEjEKQ7w/exec';
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
@@ -81,35 +88,33 @@
 
         const form = document.getElementById('attendance-form');
         const getEl = (id) => document.getElementById(id);
-        const attendanceDateInput = getEl('attendance-date');
+        const [tarikhInput, namaSelect, jawatanSelect, kategoriSelect, statusSelect, masaDatangInput, masaBalikInput, alasanSelect] = 
+            ['tarikh', 'nama', 'jawatan', 'kategori', 'status', 'masa_datang', 'masa_balik', 'alasan'].map(getEl);
         const dateDisplayElement = getEl('date-display');
-        const namaSelect = getEl('select-nama');
-        const jawatanSelect = getEl('select-jawatan');
-        const kategoriSelect = getEl('select-kategori');
-        const statusSelect = getEl('select-status');
-        const masaDatangInput = getEl('input-masa-datang');
-        const masaBalikInput = getEl('input-masa-balik');
-        const alasanSelect = getEl('select-alasan');
         const saveButton = getEl('save-button');
-        
+        const resetButton = getEl('reset-button');
+
         const refreshButton = document.createElement('button');
         refreshButton.id = 'refresh-button';
         refreshButton.className = 'action-button';
         refreshButton.textContent = 'Muat Semula Data';
-        getEl('reset-button').parentNode.insertBefore(refreshButton, getEl('reset-button'));
+        resetButton.parentNode.insertBefore(refreshButton, resetButton);
 
         function updateDateDisplay(dateString) {
             if (!dateString) { dateDisplayElement.textContent = 'Sila pilih tarikh'; return; }
             const [year, month, day] = dateString.split('-');
-            if (!year || !month || !day) { dateDisplayElement.textContent = "Format tarikh tidak lengkap"; return; }
             const dateObj = new Date(year, month - 1, day);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateDisplayElement.textContent = `Rekod untuk: ${dateObj.toLocaleDateString('ms-MY', options)}`;
+            dateDisplayElement.textContent = `Rekod untuk: ${dateObj.toLocaleDateString('ms-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
         }
 
-        function populateDropdown(selectElement, list, placeholder) {
-            selectElement.innerHTML = `<option value="">-- ${placeholder} --</option>`;
-            list.sort().forEach(item => { selectElement.innerHTML += `<option value="${item}">${item}</option>`; });
+        function populateDropdowns() {
+            const populate = (el, list, placeholder) => {
+                el.innerHTML = `<option value="">-- ${placeholder} --</option>`;
+                list.sort().forEach(item => el.innerHTML += `<option value="${item}">${item}</option>`);
+            };
+            populate(namaSelect, namaList, 'Pilih Nama');
+            populate(jawatanSelect, jawatanList, 'Pilih Jawatan');
+            populate(kategoriSelect, kategoriList, 'Pilih Kategori');
         }
         
         function resetForm(isFullReset = false) {
@@ -123,28 +128,29 @@
             const name = namaSelect.value;
             form.reset();
             namaSelect.value = name;
+            tarikhInput.value = getCurrentDateISO(); // Pastikan tarikh sentiasa ada
 
             if (!name) {
                 jawatanSelect.disabled = false;
                 kategoriSelect.disabled = false;
                 statusSelect.disabled = true;
-                return;
-            }
-            if (dailyRecords[name]) {
-                const record = dailyRecords[name];
-                jawatanSelect.value = record.Jawatan || '';
-                kategoriSelect.value = record.Kategori || '';
-                statusSelect.value = record.Status || '';
-                masaDatangInput.value = record.Masa_Datang || '';
-                masaBalikInput.value = record.Masa_Balik || '';
-                alasanSelect.value = record.Alasan || '';
-                jawatanSelect.disabled = true;
-                kategoriSelect.disabled = true;
             } else {
-                jawatanSelect.disabled = false;
-                kategoriSelect.disabled = false;
+                statusSelect.disabled = false;
+                if (dailyRecords[name]) {
+                    const rec = dailyRecords[name];
+                    jawatanSelect.value = rec.Jawatan || '';
+                    kategoriSelect.value = rec.Kategori || '';
+                    statusSelect.value = rec.Status || '';
+                    masaDatangInput.value = rec.MasaDatang || '';
+                    masaBalikInput.value = rec.MasaBalik || '';
+                    alasanSelect.value = rec.Alasan || '';
+                    jawatanSelect.disabled = true;
+                    kategoriSelect.disabled = true;
+                } else {
+                    jawatanSelect.disabled = false;
+                    kategoriSelect.disabled = false;
+                }
             }
-            statusSelect.disabled = false;
             handleStatusChange();
         }
         
@@ -157,35 +163,21 @@
             else { alasanSelect.value = ''; }
         }
 
-        // ===== FUNGSI INI TELAH DIPERBAIKI =====
         async function saveData() {
-            if (googleAppScriptUrl.includes('URL_AKHIR_ANDA')) {
-                showNotification('Ralat: Sila tetapkan URL Apps Script.', 'error');
-                return;
-            }
-
-            const selectedName = namaSelect.value;
-            const existingRecord = dailyRecords[selectedName];
-
-            // Jika ada rekod sedia ada, ambil jawatan & kategori dari situ. Jika tidak, ambil dari borang.
-            const jawatanValue = existingRecord ? existingRecord.Jawatan : jawatanSelect.value;
-            const kategoriValue = existingRecord ? existingRecord.Kategori : kategoriSelect.value;
-
+            if (googleAppScriptUrl.includes('URL_AKHIR_ANDA')) { showNotification('Ralat: Sila tetapkan URL Apps Script.', 'error'); return; }
+            
+            const name = namaSelect.value;
+            const existingRecord = dailyRecords[name];
             const recordData = {
-                tarikh: attendanceDateInput.value,
-                nama: selectedName,
-                jawatan: jawatanValue,
-                kategori: kategoriValue,
-                status: statusSelect.value,
-                masa_datang: masaDatangInput.value,
-                masa_balik: masaBalikInput.value,
-                alasan: alasanSelect.value,
+                tarikh: tarikhInput.value, nama: name,
+                jawatan: existingRecord ? existingRecord.Jawatan : jawatanSelect.value,
+                kategori: existingRecord ? existingRecord.Kategori : kategoriSelect.value,
+                status: statusSelect.value, masa_datang: masaDatangInput.value,
+                masa_balik: masaBalikInput.value, alasan: alasanSelect.value
             };
 
-            // Validasi kini lebih pintar
             if (!recordData.tarikh || !recordData.nama || !recordData.jawatan || !recordData.kategori || !recordData.status) {
-                showNotification('Sila lengkapkan semua medan yang diperlukan.', 'error');
-                return;
+                showNotification('Sila lengkapkan semua medan yang diperlukan.', 'error'); return;
             }
 
             showNotification('Menghantar data...', 'warning');
@@ -195,10 +187,9 @@
                 for (const key in recordData) { formData.append(key, recordData[key]); }
                 const response = await fetch(googleAppScriptUrl, { method: 'POST', body: formData });
                 const data = await response.json();
-                if (data.result === 'success') {
-                    showNotification(data.message, 'success');
-                    await fetchDailyData(); 
-                } else { throw new Error(data.message); }
+                if (data.result !== 'success') throw new Error(data.message);
+                showNotification(data.message, 'success');
+                await fetchDailyData();
             } catch (error) {
                 showNotification(`Gagal menyimpan: ${error.message}`, 'error');
             } finally {
@@ -207,7 +198,7 @@
         }
         
         async function fetchDailyData() {
-            const selectedDate = attendanceDateInput.value;
+            const selectedDate = tarikhInput.value;
             if (!selectedDate) { showNotification('Sila pilih tarikh dahulu.', 'error'); return; }
             
             showNotification('Memuat turun data...', 'warning');
@@ -216,14 +207,13 @@
                 const urlWithParams = `${googleAppScriptUrl}?date=${selectedDate}`;
                 const response = await fetch(urlWithParams);
                 const data = await response.json();
-                if (data.result === 'success') {
-                    dailyRecords = {};
-                    if (data.data && Array.isArray(data.data)) {
-                        data.data.forEach(record => { if(record.Nama) dailyRecords[record.Nama] = record; });
-                    }
-                    resetForm(false);
-                    showNotification(`Data untuk ${selectedDate} berjaya dimuat turun.`, 'success');
-                } else { throw new Error(data.message); }
+                if (data.result !== 'success') throw new Error(data.message);
+                dailyRecords = {};
+                if (data.data && Array.isArray(data.data)) {
+                    data.data.forEach(rec => { if(rec.Nama) dailyRecords[rec.Nama] = rec; });
+                }
+                resetForm(false);
+                showNotification(`Data untuk ${selectedDate} berjaya dimuat turun.`, 'success');
             } catch (error) {
                 showNotification(`Gagal muat turun: ${error.message}`, 'error');
             } finally {
@@ -233,38 +223,33 @@
         
         function showNotification(message, type) {
             const el = getEl('notification-area');
-            el.className = 'notification';
-            el.classList.add(type, 'show');
+            el.className = 'notification'; el.classList.add(type, 'show');
             el.textContent = message;
-            setTimeout(() => { el.classList.remove('show'); }, 5000);
+            setTimeout(() => { el.classList.remove('show'); }, 4000);
         }
         
-        function initializePage() {
+        const getCurrentDateISO = () => {
             const today = new Date();
-            const todayISO = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            attendanceDateInput.value = todayISO;
-            updateDateDisplay(todayISO);
-            
-            const functionsToPopulate = [
-                () => populateDropdown(namaSelect, namaList, 'Pilih Nama'),
-                () => populateDropdown(jawatanSelect, jawatanList, 'Pilih Jawatan'),
-                () => populateDropdown(kategoriSelect, kategoriList, 'Pilih Kategori')
-            ];
-            functionsToPopulate.forEach(fn => fn());
+            return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        };
 
+        function initializePage() {
+            const todayISO = getCurrentDateISO();
+            tarikhInput.value = todayISO;
+            updateDateDisplay(todayISO);
+            populateDropdowns();
             resetForm(true);
         }
         
-        // --- EVENT LISTENERS ---
         namaSelect.addEventListener('change', handleNameSelection);
         statusSelect.addEventListener('change', handleStatusChange);
-        attendanceDateInput.addEventListener('change', () => {
-             updateDateDisplay(attendanceDateInput.value);
+        tarikhInput.addEventListener('change', () => {
+             updateDateDisplay(tarikhInput.value);
              dailyRecords = {};
              resetForm(true);
         });
         saveButton.addEventListener('click', (e) => { e.preventDefault(); saveData(); });
-        getEl('reset-button').addEventListener('click', (e) => { e.preventDefault(); resetForm(true); showNotification('Borang telah direset.', 'warning'); });
+        resetButton.addEventListener('click', (e) => { e.preventDefault(); resetForm(true); showNotification('Borang telah direset.', 'warning'); });
         refreshButton.addEventListener('click', (e) => { e.preventDefault(); fetchDailyData(); });
         
         initializePage();

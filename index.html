@@ -61,10 +61,25 @@
                     <div class="form-group"><label for="nama">Nama Staf</label><select id="nama"></select></div>
                     <div class="form-group"><label for="jawatan">Jawatan</label><select id="jawatan"></select></div>
                     <div class="form-group"><label for="kategori">Kategori</label><select id="kategori"></select></div>
-                    <div class="form-group"><label for="status">Status Kehadiran</label><select id="status" disabled><option value="">Pilih...</option><option value="Telah Hadir">Telah Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
+                    <div class="form-group"><label for="status">Status Kehadiran</label><select id="status" disabled><option value="">Pilih...</option><option value="Hadir"> Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
                     <div class="form-group"><label for="masa_datang">Masa Datang</label><input type="time" id="masa_datang" disabled></div>
                     <div class="form-group"><label for="masa_balik">Masa Balik</label><input type="time" id="masa_balik" disabled></div>
-                    <div class="form-group"><label for="alasan">Alasan Tidak Hadir</label><select id="alasan" disabled><option value="">-</option><option value="URUSAN RASMI DI LUAR SEKOLAH">URUSAN RASMI</option><option value="URUSAN PERIBADI">URUSAN PERIBADI</option><option value="SAKIT">SAKIT</option></select></div>
+                    
+                    <!-- ===== BAHAGIAN YANG DIUBAH SUAI ===== -->
+                    <div class="form-group">
+                        <label for="alasan">Alasan Tidak Hadir</label>
+                        <select id="alasan" disabled>
+                            <option value="">-</option>
+                            <option value="Urusan Rasmi di Luar Sekolah">Urusan Rasmi di Luar Sekolah</option>
+                            <option value="Cuti Rehat">Cuti Rehat</option>
+                            <option value="Cuti Rehat Khas">Cuti Rehat Khas</option>
+                            <option value="Pelepasan">Pelepasan</option>
+                            <option value="Cuti Sakit">Cuti Sakit</option>
+                            <option value="Temujanji Klinik/Hospital">Temujanji Klinik/Hospital</option>
+                        </select>
+                    </div>
+                    <!-- ===== TAMAT BAHAGIAN DIUBAH SUAI ===== -->
+
                 </div>
             </form>
         </section>
@@ -82,7 +97,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbyWehdmVQm1FMpvveTPTtY7FThMraB_WJGJCYogoQSncs--1Eg-KMq4vruuoU0xagEWAw/exec'; 
         
-        const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina Binti Abdullah Zawawi", "Mohd.Nizar B.Abd.Latib", "Farah Norsyuidah Binti Mohd.Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai Anak Pasang", "Rosemary Lanti Anak Umpoh", "Verginia Eve Ienggah Anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa Binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura anak Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sambang"];
+        const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina binti Abdullah Zawawi", "Mohd Nizar bin Abd Latib", "Farah Norsyuidah binti Mohd Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai anak Pasang", "Rosemary Lanti anak Umpoh", "Verginia Eve Ienggah anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura binti Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sabang"];
         const jawatanList = [ "GURU BESAR", "PENOLONG KANAN PENTADBIRAN", "PENOLONG KANAN HAL EHWAL MURID", "PENOLONG KANAN KOKURIKULUM", "GURU AKADEMIK BIASA", "GURU PEMULIHAN KHAS", "GURU PRA SEKOLAH", "PEMBANTU OPERASI", "PEMBANTU TADBIR", "PEMBANTU PENGURUSAN MURID ASRAMA", "PEMBANTU PENGURUSAN MURID PRASEKOLAH" ];
         const kategoriList = ["Pentadbir", "Guru", "AKP"];
         let dailyRecords = {};
@@ -142,8 +157,6 @@
                     jawatanSelect.value = rec.Jawatan || '';
                     kategoriSelect.value = rec.Kategori || '';
                     statusSelect.value = rec.Status || '';
-                    // --- INILAH PEMBETULANNYA ---
-                    // Kini ia akan membaca `Masa Datang` yang telah diformatkan dengan betul
                     masaDatangInput.value = rec['Masa Datang'] || '';
                     masaBalikInput.value = rec['Masa Balik'] || '';
                     alasanSelect.value = rec.Alasan || '';
@@ -158,7 +171,7 @@
         }
         
         function handleStatusChange() {
-            const isHadir = statusSelect.value === 'Telah Hadir';
+            const isHadir = statusSelect.value === 'Hadir';
             masaDatangInput.disabled = !isHadir;
             masaBalikInput.disabled = !isHadir;
             alasanSelect.disabled = isHadir;

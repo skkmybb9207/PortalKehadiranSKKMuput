@@ -65,7 +65,6 @@
                     <div class="form-group"><label for="masa_datang">Masa Datang</label><input type="time" id="masa_datang" disabled></div>
                     <div class="form-group"><label for="masa_balik">Masa Balik</label><input type="time" id="masa_balik" disabled></div>
                     
-                    <!-- ===== BAHAGIAN YANG DIUBAH SUAI ===== -->
                     <div class="form-group">
                         <label for="alasan">Alasan Tidak Hadir</label>
                         <select id="alasan" disabled>
@@ -78,7 +77,6 @@
                             <option value="Temujanji Klinik/Hospital">Temujanji Klinik/Hospital</option>
                         </select>
                     </div>
-                    <!-- ===== TAMAT BAHAGIAN DIUBAH SUAI ===== -->
 
                 </div>
             </form>
@@ -93,8 +91,32 @@
     </div>
     <div id="notification-area" class="notification"></div>
 
+    <!-- ===== BAHAGIAN KREDIT PENCIPTA (MULA) ===== -->
+    <style>
+      .footer-credit {
+        text-align: center;
+        margin-top: 40px; 
+        padding: 10px;
+        font-size: 0.9em; 
+        color: #6c757d;
+      }
+      .footer-credit p {
+        margin: 5px 0;
+      }
+      .footer-credit strong {
+        color: var(--skkm-blue); /* Guna warna biru tema */
+      }
+    </style>
+    <footer class="footer-credit">
+      <p>Portal Kehadiran Staf SK Kuala Muput © 2025</p>
+      <!-- ▼▼▼ TUKAR NAMA ANDA DI SINI ▼▼▼ -->
+      <p>Dibangunkan oleh: <strong>[Cikgu Dayangku Nurul Akmal Awang Mustapha]</strong></p>
+    </footer>
+    <!-- ===== BAHAGIAN KREDIT PENCIPTA (TAMAT) ===== -->
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // ▼▼▼ PASTIKAN URL APPS SCRIPT ANDA BETUL DI SINI ▼▼▼
         const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbx_UvWsrRPYgB8lxGFeOaZK7eQZ2KNBKuNX4F10rI7VfvyoJgr9EjFh-ikmx3jrt_6Yfw/exec'; 
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina binti Abdullah Zawawi", "Mohd Nizar bin Abd Latib", "Farah Norsyuidah binti Mohd Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai anak Pasang", "Rosemary Lanti anak Umpoh", "Verginia Eve Ienggah anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura binti Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sabang"];

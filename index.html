@@ -96,8 +96,8 @@
       <p>Portal Kehadiran Staf SK Kuala Muput © 2025</p>
       <p>Inovasi Digital oleh: <strong>Cikgu Dayangku Nurul Akmal Awang Mustapha</strong></p>
       <p>Dibangunkan pada: <strong>3 Julai 2025</strong></p>
-      <!-- ===== BAHAGIAN YANG DIUBAH ===== -->
-      <p>Sistem beroperasi selama: <span id="uptime-counter">memuatkan...</span></p>
+      <!-- ===== Teks pada baris ini telah ditukar ===== -->
+      <p>Sistem beroperasi selama: <strong id="system-uptime">Memuat...</strong></p>
     </footer>
 
     <script>
@@ -279,7 +279,8 @@
                     const countdown = -difference;
                     const days = Math.floor(countdown / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((countdown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    uptimeElement.textContent = `(Akan dilancarkan dalam ${days} hari, ${hours} jam)`;
+                    // ===== Paparan kaunter masa diubah (kurungan dibuang) =====
+                    uptimeElement.textContent = `Akan dilancarkan dalam ${days} hari, ${hours} jam`;
                     return;
                 }
                 
@@ -288,7 +289,8 @@
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                uptimeElement.textContent = `(${days} hari, ${hours} jam, ${minutes} minit, ${seconds} saat)`;
+                // ===== Paparan kaunter masa diubah (kurungan dibuang) =====
+                uptimeElement.textContent = `${days} hari, ${hours} jam, ${minutes} minit, ${seconds} saat`;
             }
 
             setInterval(updateTimer, 1000);

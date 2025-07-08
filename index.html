@@ -42,6 +42,9 @@
         .notification.success { background-color: rgba(40, 167, 69, 0.9); }
         .notification.error { background-color: rgba(220, 53, 69, 0.9); }
         .notification.warning { background-color: rgba(255, 193, 7, 0.9); color: #333; }
+        .footer-credit { text-align: center; margin-top: 40px; padding: 10px; font-size: 0.9em; color: #6c757d; }
+        .footer-credit p { margin: 5px 0; }
+        .footer-credit strong { color: var(--skkm-blue); }
         @media (max-width: 768px) { .container { padding: 15px; backdrop-filter: none; -webkit-backdrop-filter: none; } .header h1 { font-size: 1.5em; } .action-buttons { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
@@ -64,7 +67,6 @@
                     <div class="form-group"><label for="status">Status Kehadiran</label><select id="status" disabled><option value="">Pilih...</option><option value="Hadir"> Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select></div>
                     <div class="form-group"><label for="masa_datang">Masa Datang</label><input type="time" id="masa_datang" disabled></div>
                     <div class="form-group"><label for="masa_balik">Masa Balik</label><input type="time" id="masa_balik" disabled></div>
-                    
                     <div class="form-group">
                         <label for="alasan">Alasan Tidak Hadir</label>
                         <select id="alasan" disabled>
@@ -77,7 +79,6 @@
                             <option value="Temujanji Klinik/Hospital">Temujanji Klinik/Hospital</option>
                         </select>
                     </div>
-
                 </div>
             </form>
         </section>
@@ -91,32 +92,15 @@
     </div>
     <div id="notification-area" class="notification"></div>
 
-    <!-- ===== BAHAGIAN KREDIT PENCIPTA (MULA) ===== -->
-    <style>
-      .footer-credit {
-        text-align: center;
-        margin-top: 40px; 
-        padding: 10px;
-        font-size: 0.9em; 
-        color: #6c757d;
-      }
-      .footer-credit p {
-        margin: 5px 0;
-      }
-      .footer-credit strong {
-        color: var(--skkm-blue); /* Guna warna biru tema */
-      }
-    </style>
     <footer class="footer-credit">
       <p>Portal Kehadiran Staf SK Kuala Muput © 2025</p>
-      <!-- ▼▼▼ TUKAR NAMA ANDA DI SINI ▼▼▼ -->
       <p>Inovasi Digital oleh: <strong>Cikgu Dayangku Nurul Akmal Awang Mustapha</strong></p>
+      <!-- ===== BAHAGIAN BARU: COUNTUP TIMER (HTML) ===== -->
+      <p>Sistem beroperasi selama: <strong id="system-uptime">Memuat...</strong></p>
     </footer>
-    <!-- ===== BAHAGIAN KREDIT PENCIPTA (TAMAT) ===== -->
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ▼▼▼ PASTIKAN URL APPS SCRIPT ANDA BETUL DI SINI ▼▼▼
         const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbx_UvWsrRPYgB8lxGFeOaZK7eQZ2KNBKuNX4F10rI7VfvyoJgr9EjFh-ikmx3jrt_6Yfw/exec'; 
         
         const namaList = ["Ngalambong Anak Baring", "Ina Rosyaida binti Yahya", "Julia anak Muuk", "Raymond Devan anak James Devan", "Rozalina binti Abdullah Zawawi", "Mohd Nizar bin Abd Latib", "Farah Norsyuidah binti Mohd Noor", "Dayangku Nurul Akmal binti Awang Mustapha", "Rosieca Jelawai anak Pasang", "Rosemary Lanti anak Umpoh", "Verginia Eve Ienggah anak Adam", "Patricia anak Petrus", "Norjasmin binti Sapiee", "Amelia Nashthasa binti Noh", "Jelai anak Bundak", "Tutong anak Bunya", "Ellyna Haura binti Apoi", "Mohammad Faizy bin Sahadi", "Rose anak Garai", "Pui Lee Hui", "Bakar anak Sabang"];
@@ -279,6 +263,39 @@
             populateDropdowns();
             resetForm(true);
         }
+
+        // ===== KOD BARU: FUNGSI UNTUK COUNTUP TIMER (JAVASCRIPT) =====
+        function startSystemUptime() {
+            // ▼▼▼ TUKAR TARIKH MULA SISTEM DI SINI (Format: TAHUN-BULAN-HARI) ▼▼▼
+            const startDate = new Date('2025-07-03T00:00:00'); // Contoh: 3 Julai 2024
+            const uptimeElement = document.getElementById('system-uptime');
+
+            if (!uptimeElement) return; // Hentikan jika elemen tidak dijumpai
+
+            function updateTimer() {
+                const now = new Date();
+                const difference = now - startDate;
+                
+                if (difference < 0) {
+                    uptimeElement.textContent = "Akan dilancarkan tidak lama lagi.";
+                    return;
+                }
+
+                // Kira hari, jam, minit, saat
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                // Paparkan di skrin
+                uptimeElement.textContent = `${days} hari, ${hours} jam, ${minutes} minit, ${seconds} saat`;
+            }
+
+            // Kemas kini timer setiap saat
+            setInterval(updateTimer, 1000);
+            // Panggil sekali pada permulaan
+            updateTimer(); 
+        }
         
         tarikhInput.addEventListener('change', () => {
             updateDateDisplay();
@@ -294,6 +311,7 @@
         refreshButton.addEventListener('click', (e) => { e.preventDefault(); fetchDailyData(); });
         
         initializePage();
+        startSystemUptime(); // <-- Memulakan kaunter masa
     });
     </script>
 </body>

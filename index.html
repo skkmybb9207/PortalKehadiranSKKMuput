@@ -95,7 +95,9 @@
     <footer class="footer-credit">
       <p>Portal Kehadiran Staf SK Kuala Muput © 2025</p>
       <p>Inovasi Digital oleh: <strong>Cikgu Dayangku Nurul Akmal Awang Mustapha</strong></p>
-      <!-- ===== BAHAGIAN BARU: COUNTUP TIMER (HTML) ===== -->
+      <!-- ===== PAPARAN TARIKH STATIK ===== -->
+      <p>Dibangunkan pada: <strong>3 Julai 2025</strong></p>
+      <!-- ===== PAPARAN KAUNTER MASA DINAMIK ===== -->
       <p>Sistem beroperasi selama: <strong id="system-uptime">Memuat...</strong></p>
     </footer>
 
@@ -264,36 +266,37 @@
             resetForm(true);
         }
 
-        // ===== KOD BARU: FUNGSI UNTUK COUNTUP TIMER (JAVASCRIPT) =====
+        // ===== FUNGSI UNTUK COUNTUP TIMER =====
         function startSystemUptime() {
-            // ▼▼▼ TUKAR TARIKH MULA SISTEM DI SINI (Format: TAHUN-BULAN-HARI) ▼▼▼
-            const startDate = new Date('2025-07-03T00:00:00'); // Contoh: 3 Julai 2024
+            // Tarikh mula sistem. Format: TAHUN-BULAN-HARI
+            const startDate = new Date('2025-07-03T00:00:00'); 
             const uptimeElement = document.getElementById('system-uptime');
 
-            if (!uptimeElement) return; // Hentikan jika elemen tidak dijumpai
+            if (!uptimeElement) return;
 
             function updateTimer() {
                 const now = new Date();
                 const difference = now - startDate;
-                
+
+                // Jika tarikh masih di masa hadapan, tunjukkan "countdown"
                 if (difference < 0) {
-                    uptimeElement.textContent = "Akan dilancarkan tidak lama lagi.";
+                    const countdown = -difference;
+                    const days = Math.floor(countdown / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((countdown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    uptimeElement.textContent = `Akan dilancarkan dalam ${days} hari, ${hours} jam`;
                     return;
                 }
-
-                // Kira hari, jam, minit, saat
+                
+                // Jika tarikh telah berlalu, tunjukkan "count-up"
                 const days = Math.floor(difference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                // Paparkan di skrin
                 uptimeElement.textContent = `${days} hari, ${hours} jam, ${minutes} minit, ${seconds} saat`;
             }
 
-            // Kemas kini timer setiap saat
             setInterval(updateTimer, 1000);
-            // Panggil sekali pada permulaan
             updateTimer(); 
         }
         

@@ -22,8 +22,8 @@
         .header img { max-width: 120px; margin-bottom: 15px; }
         .header h1 { color: var(--skkm-blue); font-weight: 700; margin: 0; font-size: 1.8em; }
         .header p#date-display { margin-top: 15px; font-size: 1.1em; font-weight: 600; color: #444; background-color: rgba(255, 224, 130, 0.6); padding: 8px 15px; border-radius: 8px; display: inline-block; border: 1px solid rgba(224, 194, 100, 0.5); }
-        .entry-form-section { background-color: var(--form-bg); padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--border-color); }
-        .entry-form-section h2 { margin-top: 0; border-bottom: 2px solid var(--skkm-blue); padding-bottom: 10px; margin-bottom: 25px; }
+        .entry-form-section, .admin-section { background-color: var(--form-bg); padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--border-color); }
+        .entry-form-section h2, .admin-section h2 { margin-top: 0; border-bottom: 2px solid var(--skkm-blue); padding-bottom: 10px; margin-bottom: 25px; }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
         .form-group { display: flex; flex-direction: column; }
         .form-group label { margin-bottom: 5px; font-weight: 600; }
@@ -44,6 +44,11 @@
         .notification.success { background-color: rgba(40, 167, 69, 0.9); }
         .notification.error { background-color: rgba(220, 53, 69, 0.9); }
         .notification.warning { background-color: rgba(255, 193, 7, 0.9); color: #333; }
+        #admin-report-content { max-height: 400px; overflow-y: auto; padding: 10px; background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 8px; line-height: 1.7; }
+        #admin-report-content ul { list-style-type: none; padding: 0; }
+        #admin-report-content li { margin-bottom: 15px; background-color: #fff; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        #admin-report-content strong { color: var(--skkm-blue); font-size: 1.1em; }
+        #admin-report-content em { font-style: normal; font-weight: 600; }
         .footer-credit { text-align: center; margin-top: 40px; padding: 10px; font-size: 0.7em; color: #6c757d; }
         .footer-credit p { margin: 5px 0; }
         .footer-credit strong { color: var(--skkm-blue); }
@@ -92,6 +97,11 @@
             <button id="admin-button" class="action-button">Paparan Admin</button>
             <a href="https://docs.google.com/spreadsheets/d/1TH5fOfbMY2hApwrQazPcv2xoMctoXRT27MKGZZYHi2E/edit?usp=sharing" target="_blank" class="action-button report-button">Jana Laporan Penuh</a>
         </div>
+
+        <section class="admin-section" id="admin-panel" style="display:none;">
+            <h2>Laporan Kehadiran Belum Direkodkan</h2>
+            <div id="admin-report-content"><p>Sila klik butang 'Paparan Admin' dan log masuk untuk menjana laporan.</p></div>
+        </section>
         
     </div>
     <div id="notification-area" class="notification"></div>
@@ -105,10 +115,9 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ========== MASUKKAN DUA URL ANDA DI SINI ==========
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbyLuElN5lSyUkpKireuv66cwO_2pmfvR0m11DWJXfjZMMXcVgfsnO1O5kytE2y8qBFgsw/exec'; // URL Awam ("Execute as: User")
-        const adminUrl = 'https://script.google.com/macros/s/AKfycby0aUr6foWMA_XyFzVtGUIxKMPC4P30kfTd6mUhXV8VhzMkwd8fPtOgyc0wSEIfQ5ZGSg/exec'; // URL Admin ("Execute as: Me")
-        // ======================================================
+        // ========== GUNA SATU URL SAHAJA UNTUK SEMUANYA ==========
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbwrum6M78uHy6FV8sxG6qo0WxNUpulKWAptKsxuXENb1maXbjHHBMMLTQsBVoUZdws6Kw/exec';
+        // ==========================================================
         
         let dailyRecords = {};
         let staffMasterList = [];
@@ -117,8 +126,8 @@
         const getEl = (id) => document.getElementById(id);
         const [tarikhInput, namaSelect, jawatanInput, kategoriInput, statusSelect, masaDatangInput, masaBalikInput, alasanSelect] = 
             ['tarikh', 'nama', 'jawatan', 'kategori', 'status', 'masa_datang', 'masa_balik', 'alasan'].map(getEl);
-        const [dateDisplayElement, saveButton, resetButton, refreshButton, adminButton] =
-            ['date-display', 'save-button', 'reset-button', 'refresh-button', 'admin-button'].map(getEl);
+        const [dateDisplayElement, saveButton, resetButton, refreshButton, adminButton, adminPanel, adminReportContent] =
+            ['date-display', 'save-button', 'reset-button', 'refresh-button', 'admin-button', 'admin-panel', 'admin-report-content'].map(getEl);
 
         function updateDateDisplay() {
             const dateString = tarikhInput.value;
@@ -159,6 +168,7 @@
             
             if (isFullReset) {
                 namaSelect.value = '';
+                adminPanel.style.display = 'none';
             }
             
             handleStatusChange();
@@ -279,11 +289,66 @@
             if (pass === null) return;
 
             if (user === "Admin" && pass === "Admin9207") {
-                const adminPageUrl = `${adminUrl}?view=admin`;
-                window.open(adminPageUrl, '_blank');
+                fetchAdminReport();
             } else {
                 showNotification("Nama pengguna atau kata laluan salah!", "error");
             }
+        }
+
+        async function fetchAdminReport() {
+            adminPanel.style.display = 'block';
+            adminReportContent.innerHTML = '<p>Menjana laporan, sila tunggu...</p>';
+            showNotification('Memuat turun laporan admin...', 'warning');
+            
+            try {
+                const response = await fetch(`${googleAppScriptUrl}?action=getAdminReport`);
+                if (!response.ok) throw new Error(`Ralat Rangkaian: ${response.status}`);
+                const data = await response.json();
+                if (data.result !== 'success') throw new Error(data.message);
+                
+                displayAdminReport(data.data);
+                showNotification('Laporan admin berjaya dijana.', 'success');
+            } catch (error) {
+                adminReportContent.innerHTML = `<p style="color:red;">Gagal menjana laporan: ${error.message}</p>`;
+                showNotification(`Gagal menjana laporan: ${error.message}`, 'error');
+            }
+        }
+
+        function displayAdminReport(records) {
+            if (!records || records.length === 0) {
+                adminReportContent.innerHTML = '<p>Tiada rekod kehadiran yang belum diisi ditemui. Tahniah!</p>';
+                return;
+            }
+
+            const groupedByName = records.reduce((acc, record) => {
+                if (!acc[record.nama]) acc[record.nama] = [];
+                acc[record.nama].push(record.tarikh);
+                return acc;
+            }, {});
+
+            let html = '<ul>';
+            const sortedNames = Object.keys(groupedByName).sort();
+
+            for (const name of sortedNames) {
+                html += `<li><strong>${name}:</strong><br>`;
+
+                const datesByMonth = groupedByName[name].reduce((acc, dateString) => {
+                    const d = new Date(dateString);
+                    const monthKey = d.toLocaleDateString('ms-MY', { month: 'long', year: 'numeric' });
+                    const day = d.getDate();
+                    if (!acc[monthKey]) acc[monthKey] = [];
+                    acc[monthKey].push(day);
+                    return acc;
+                }, {});
+
+                for (const month in datesByMonth) {
+                    const sortedDays = datesByMonth[month].sort((a, b) => a - b);
+                    html += `<em>${month}:</em> ${sortedDays.join(', ')}<br>`;
+                }
+                html += `</li>`;
+            }
+            html += '</ul>';
+            adminReportContent.innerHTML = html;
         }
 
         function showNotification(message, type) {

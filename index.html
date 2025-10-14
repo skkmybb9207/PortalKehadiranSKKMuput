@@ -105,9 +105,10 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // GUNA SATU URL SAHAJA UNTUK FUNGSI-FUNGSI AWAM DI LAMAN INI
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbw7Y4-EnCNc2JCjG0KaGM3IJCcI2e0wwIMjtxKW34gkzEREgKw3bSqPguSs8WkWgejo/exec'; // <-- PENTING: Guna URL "Execute as: User"
-        const adminUrl = 'https://script.google.com/macros/s/AKfycbx2a9Di6vUSvZq3ko9a1c3Od-ecKXz2QFoPD8HtM-p_WVfB_Oq2gjfmQk2SDBRsQOMKAQ/exec';         // <-- PENTING: Guna URL "Execute as: Me"
+        // ========== MASUKKAN DUA URL ANDA DI SINI ==========
+        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbw7Y4-EnCNc2JCjG0KaGM3IJCcI2e0wwIMjtxKW34gkzEREgKw3bSqPguSs8WkWgejo/exec'; // URL Awam ("Execute as: User")
+        const adminUrl = 'https://script.google.com/macros/s/AKfycbx2a9Di6vUSvZq3ko9a1c3Od-ecKXz2QFoPD8HtM-p_WVfB_Oq2gjfmQk2SDBRsQOMKAQ/exec'; // URL Admin ("Execute as: Me")
+        // ======================================================
         
         let dailyRecords = {};
         let staffMasterList = [];
@@ -278,7 +279,6 @@
             if (pass === null) return;
 
             if (user === "Admin" && pass === "Admin9207") {
-                // Buka laman admin di tab baharu
                 const adminPageUrl = `${adminUrl}?view=admin`;
                 window.open(adminPageUrl, '_blank');
             } else {

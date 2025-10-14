@@ -114,7 +114,12 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbz5apYZPpCN-tbj23LqvSkIwoYc5xktjy_BhsCvlmeLh28Yzd_NTbJdKUvXVNbjmt-lLw/exec'; 
+        // =======================================================================
+        // === KEMAS KINI DUA URL DI BAWAH INI SEPERTI YANG ANDA BERIKAN ===
+        // =======================================================================
+        const googleAppScriptUrl_Public = 'https://script.google.com/macros/s/AKfycbw7Y4-EnCNc2JCjG0KaGM3IJCcI2e0wwIMjtxKW34gkzEREgKw3bSqPguSs8WkWgejo/exec';
+        const googleAppScriptUrl_Admin = 'https://script.google.com/macros/s/AKfycbx2a9Di6vUSvZq3ko9a1c3Od-ecKXz2QFoPD8HtM-p_WVfB_Oq2gjfmQk2SDBRsQOMKAQ/exec';
+        // =======================================================================
         
         let dailyRecords = {};
         let staffMasterList = [];
@@ -137,7 +142,8 @@
         async function fetchStaffList() {
             showNotification('Memuat turun senarai staf...', 'warning');
             try {
-                const response = await fetch(`${googleAppScriptUrl}?action=getStaff`);
+                // GUNA URL AWAM
+                const response = await fetch(`${googleAppScriptUrl_Public}?action=getStaff`);
                 if (!response.ok) throw new Error(`Ralat Rangkaian: ${response.status}`);
                 const data = await response.json();
                 if (data.result !== 'success') throw new Error(data.message);
@@ -165,7 +171,7 @@
             
             if (isFullReset) {
                 namaSelect.value = '';
-                adminPanel.style.display = 'none'; // Sembunyikan panel admin semasa reset
+                adminPanel.style.display = 'none';
             }
             
             handleStatusChange();
@@ -240,7 +246,8 @@
             try {
                 const formData = new FormData();
                 for (const key in recordData) { formData.append(key, recordData[key]); }
-                const response = await fetch(googleAppScriptUrl, { method: 'POST', body: formData });
+                // GUNA URL AWAM
+                const response = await fetch(googleAppScriptUrl_Public, { method: 'POST', body: formData });
                 if (!response.ok) throw new Error(`Ralat Rangkaian: ${response.status} ${response.statusText}`);
                 const data = await response.json();
                 if (data.result !== 'success') throw new Error(data.message);
@@ -260,7 +267,8 @@
             showNotification('Memuat turun data kehadiran...', 'warning');
             refreshButton.disabled = true;
             try {
-                const urlWithParams = `${googleAppScriptUrl}?date=${selectedDate}`;
+                // GUNA URL AWAM
+                const urlWithParams = `${googleAppScriptUrl_Public}?date=${selectedDate}`;
                 const response = await fetch(urlWithParams);
                 if (!response.ok) throw new Error(`Ralat Rangkaian: ${response.status}`);
                 const data = await response.json();
@@ -298,7 +306,8 @@
             showNotification('Memuat turun laporan admin...', 'warning');
             
             try {
-                const response = await fetch(`${googleAppScriptUrl}?action=getAdminReport`);
+                // GUNA URL ADMIN
+                const response = await fetch(`${googleAppScriptUrl_Admin}?action=getAdminReport`);
                 if (!response.ok) throw new Error(`Ralat Rangkaian: ${response.status}`);
                 const data = await response.json();
                 if (data.result !== 'success') throw new Error(data.message);
@@ -349,7 +358,7 @@
         async function initializePage() {
             tarikhInput.value = getCurrentDateISO();
             updateDateDisplay();
-            await fetchStaffList(); // Tunggu senarai staf dimuat turun dahulu
+            await fetchStaffList();
             resetForm(true);
         }
 

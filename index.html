@@ -85,9 +85,9 @@
         </section>
         
         <div class="action-buttons">
-            <button id="save-button" class="action-button save-button">Simpan</button>
-            <button id="refresh-button" class="action-button">Muat Semula Data</button>
-            <button id="reset-button" class="action-button reset-button">Reset Borang</button>
+            <button type="button" id="save-button" class="action-button save-button">Simpan</button>
+            <button type="button" id="refresh-button" class="action-button">Muat Semula Data</button>
+            <button type="button" id="reset-button" class="action-button reset-button">Reset Borang</button>
             <a href="https://docs.google.com/spreadsheets/d/1TH5fOfbMY2hApwrQazPcv2xoMctoXRT27MKGZZYHi2E/edit?usp=sharing" target="_blank" class="action-button report-button">Jana Laporan Penuh</a>
         </div>
         
@@ -175,9 +175,11 @@
                     jawatanInput.value = staffInfo.jawatan;
                     kategoriInput.value = staffInfo.kategori;
                 }
+                
+                const recordKey = Object.keys(dailyRecords).find(key => key.trim() === selectedName.trim());
+                const rec = recordKey ? dailyRecords[recordKey] : null;
 
-                if (dailyRecords[selectedName]) {
-                    const rec = dailyRecords[selectedName];
+                if (rec) {
                     statusSelect.value = rec.Status || '';
                     masaDatangInput.value = rec['Masa Datang'] || '';
                     masaBalikInput.value = rec['Masa Balik'] || '';
@@ -313,9 +315,13 @@
         
         namaSelect.addEventListener('change', handleNameSelection);
         statusSelect.addEventListener('change', handleStatusChange);
-        saveButton.addEventListener('click', (e) => { e.preventDefault(); saveData(); });
-        resetButton.addEventListener('click', (e) => { e.preventDefault(); resetForm(true); showNotification('Borang telah direset.', 'warning'); });
-        refreshButton.addEventListener('click', (e) => { e.preventDefault(); fetchDailyData(); });
+        
+        saveButton.addEventListener('click', saveData);
+        refreshButton.addEventListener('click', fetchDailyData);
+        resetButton.addEventListener('click', () => {
+            resetForm(true);
+            showNotification('Borang telah direset.', 'warning');
+        });
         
         initializePage();
         startSystemUptime();

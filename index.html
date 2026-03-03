@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kehadiran Staf SKKM</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/rF2DWVn3/logo-kehadiran-staf.png">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         :root {
@@ -52,7 +55,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <img src="https://i.postimg.cc/qqQ1s1V9/LOGO-SKKM-2023-LATEST.png" alt="Logo SK Kuala Muput">
+            <img src="https://i.postimg.cc/02HcpMpk/logo-3d-skkm-transparent.png" alt="Logo SK Kuala Muput">
             <h1>Portal Kehadiran Staf</h1>
             <p id="date-display"></p>
         </header>
@@ -88,7 +91,7 @@
             <button type="button" id="save-button" class="action-button save-button">Simpan</button>
             <button type="button" id="refresh-button" class="action-button">Muat Semula Data</button>
             <button type="button" id="reset-button" class="action-button reset-button">Reset Borang</button>
-            <a href="https://docs.google.com/spreadsheets/d/1TH5fOfbMY2hApwrQazPcv2xoMctoXRT27MKGZZYHi2E/edit?usp=sharing" target="_blank" class="action-button report-button">Jana Laporan Penuh</a>
+            <button type="button" id="report-access-button" class="action-button report-button">🔒 Jana Laporan Penuh</button>
         </div>
         
     </div>
@@ -112,8 +115,8 @@
         const getEl = (id) => document.getElementById(id);
         const [tarikhInput, namaSelect, jawatanInput, kategoriInput, statusSelect, masaDatangInput, masaBalikInput, alasanSelect] = 
             ['tarikh', 'nama', 'jawatan', 'kategori', 'status', 'masa_datang', 'masa_balik', 'alasan'].map(getEl);
-        const [dateDisplayElement, saveButton, resetButton, refreshButton] =
-            ['date-display', 'save-button', 'reset-button', 'refresh-button'].map(getEl);
+        const [dateDisplayElement, saveButton, resetButton, refreshButton, reportButton] =
+            ['date-display', 'save-button', 'reset-button', 'refresh-button', 'report-access-button'].map(getEl);
 
         function updateDateDisplay() {
             const dateString = tarikhInput.value;
@@ -305,6 +308,15 @@
             setInterval(updateTimer, 1000);
             updateTimer(); 
         }
+
+        function handleReportAccess() {
+            const pass = prompt("Sila masukkan kata laluan untuk mengakses laporan:");
+            if (pass === "SKKM2025") {
+                window.open("https://docs.google.com/spreadsheets/d/1TH5fOfbMY2hApwrQazPcv2xoMctoXRT27MKGZZYHi2E/edit?usp=sharing", "_blank");
+            } else if (pass !== null) {
+                showNotification("Kata laluan salah! Akses ditolak.", "error");
+            }
+        }
         
         tarikhInput.addEventListener('change', () => {
             updateDateDisplay();
@@ -318,6 +330,7 @@
         
         saveButton.addEventListener('click', saveData);
         refreshButton.addEventListener('click', fetchDailyData);
+        reportButton.addEventListener('click', handleReportAccess);
         resetButton.addEventListener('click', () => {
             resetForm(true);
             showNotification('Borang telah direset.', 'warning');
